@@ -1,0 +1,31 @@
+name: workshop-202506
+channels:
+- conda-forge
+dependencies:
+- python==3.12
+- pip
+- numpy
+- pandas>=2
+- netcdf4
+- pypsa>=0.31
+- tabula-py
+- xlrd
+- lxml
+- pytables
+- pyxlsb
+- openpyxl
+- libgdal-hdf5
+- libgdal-netcdf
+- cartopy>=0.22
+- matplotlib>=3.6
+- plotly
+- ipython
+- jupyterlab
+- jupyter-book
+- ghp-import
+- pre-commit
+- geopandas
+- shapely
+- requests
+- pip:
+  - highspy
