@@ -11,9 +11,9 @@ chapters:
 - file: 03-pypsa-sectors-expansion
 - file: pypsa-stochastic
   title: (Coming soon) Stochastic optimization with PyPSA
-# - file: config-small-system
-#   title: config-small-system.yaml
-# - file: config-big-system
-#   title: config-big-system.yaml
+- file: config-small-system
+  title: config-small-system.yaml
+- file: config-big-system
+  title: config-big-system.yaml
 - file: annex-python
 - file: annex-pandas
