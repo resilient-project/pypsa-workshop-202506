@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Welcome to the workshop! &#8212; PyPSA(-Eur) workshop</title>
+    <title>Annex Config &#8212; PyPSA(-Eur) workshop</title>
   
   
   
@@ -57,13 +57,12 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'config-small-system';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Introduction to pypsa and linopy: a simple dispatch problem" href="01-pypsa-intro.html" />
+    <link rel="next" title="Annex Config" href="config-big-system.html" />
+    <link rel="prev" title="New features: Stochastic Optimization in PyPSA" href="pypsa-stochastic.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,8 +125,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -146,7 +143,7 @@
     
   
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="intro.html">
   
   
   
@@ -177,18 +174,18 @@
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1 current active">
-                <a class="reference internal" href="#">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
                     Welcome to the workshop!
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01-pypsa-intro.html">Introduction to <code class="docutils literal notranslate"><span class="pre">pypsa</span></code> and <code class="docutils literal notranslate"><span class="pre">linopy</span></code>: a simple dispatch problem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02-pypsa-more-features.html">More <code class="docutils literal notranslate"><span class="pre">pypsa</span></code> features: more complex dispatch problems</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03-pypsa-sectors-expansion.html">Advanced models in <code class="docutils literal notranslate"><span class="pre">pypsa</span></code>: capacity expansion planning with sector coupling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pypsa-stochastic.html">(Coming soon) Stochastic optimization with PyPSA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config-small-system.html">config-small-system.yaml</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">config-small-system.yaml</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config-big-system.html">config-big-system.yaml</a></li>
 <li class="toctree-l1"><a class="reference internal" href="annex-python.html">Annex: Intro to the basics of <code class="docutils literal notranslate"><span class="pre">Python</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="annex-pandas.html">Annex: Tabular data analysis with <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a></li>
@@ -263,7 +260,7 @@
       
       
       
-      <li><a href="https://github.com/resilient-project/pypsa-workshop-202506/issues/new?title=Issue%20on%20page%20%2Fintro.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/resilient-project/pypsa-workshop-202506/issues/new?title=Issue%20on%20page%20%2Fconfig-small-system.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -293,7 +290,7 @@
       
       
       
-      <li><a href="_sources/intro.md" target="_blank"
+      <li><a href="_sources/config-small-system.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -364,9 +361,7 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -377,32 +372,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Welcome to the workshop!</h1>
+    <h1>Annex Config</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#google-colab">Google Colab</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-your-python-environment-locally">Setting up your Python environment locally</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anaconda">Anaconda</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#managing-environments-with-conda">Managing environments with <code class="docutils literal notranslate"><span class="pre">conda</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tip-use-lightweight-miniconda">Tip: use lightweight <code class="docutils literal notranslate"><span class="pre">miniconda</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-for-this-course-workshop">Environment for this course: <code class="docutils literal notranslate"><span class="pre">workshop</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#with-conda-recommended">… with <code class="docutils literal notranslate"><span class="pre">conda</span></code> (recommended)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#with-pip">… with <code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
-</ul>
-</li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -412,91 +386,100 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="welcome-to-the-workshop">
-<h1>Welcome to the workshop!<a class="headerlink" href="#welcome-to-the-workshop" title="Link to this heading">#</a></h1>
-<p><em>26-27 June 2025, DTU, Denmark</em></p>
-<p>This repository contains PyPSA(-Eur) materials for a workshop organized for a broad audience of researchers and industry stakeholders interested in energy system modelling.</p>
-<p>The workshop is hosted by the <strong>DTU Department of Wind and Energy Systems</strong> — Marta Victoria, Aleksander Grochowicz, Lukas Karkossa, Parisa Rahdan — with support from the <strong>DFF Sapere Aude project EXTREMES</strong>. DTU team gratefully acknowledges funding by Danmarks Frie Forskningsfond (DFF) Sapere Aude—EXTREMES project (2067-00009B).</p>
-<p>The workshop is co-hosted by the <strong>ENSYS research group at TU Berlin</strong> — Fabian Neumann and Iegor Riepin — with support from the <strong>RESILIENT project</strong>. TUB team gratefully acknowledges funding by the German Federal Ministry for Economic Affairs and Energy (BMWE) under Grant No. 03EI4083A (RESILIENT project**) jointly with the CETPartnership (<a class="reference external" href="https://cetpartnership.eu/">https://cetpartnership.eu/</a>) through the Joint Call 2022, which supports our modelling workshops and public training events.</p>
-<p>More about our work:</p>
-<ul class="simple">
-<li><p>EXTREMES project: <a class="reference external" href="https://orbit.dtu.dk/en/projects/disaster-resilience-for-extreme-climate-events-providing-interope/">https://orbit.dtu.dk/en/projects/disaster-resilience-for-extreme-climate-events-providing-interope</a></p></li>
-<li><p>RESILIENT project: <a class="reference external" href="https://resilient-project.github.io/">https://resilient-project.github.io/</a></p></li>
-</ul>
-<section id="google-colab">
-<h2>Google Colab<a class="headerlink" href="#google-colab" title="Link to this heading">#</a></h2>
-<p>You can work with the workshop materials without a local Python installation using online service <a class="reference external" href="https://colab.google">Google Colab</a> which provides an online Python environment. This requires only a Google account.</p>
-<p>Open any jupyter notebook and click on the rocket 🚀 in the top right corner. It will launch a Colab workspace in your browser with the jupyter notebook loaded.</p>
-<p>If that does not work download the <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code> file and import it in <a class="reference external" href="https://colab.research.google.com/">Google Colab</a></p>
-</section>
-<section id="setting-up-your-python-environment-locally">
-<h2>Setting up your Python environment locally<a class="headerlink" href="#setting-up-your-python-environment-locally" title="Link to this heading">#</a></h2>
-<section id="anaconda">
-<h3>Anaconda<a class="headerlink" href="#anaconda" title="Link to this heading">#</a></h3>
-<p>Coordinating the compatibility between different Python software packages and
-their multiple versions can be difficult! Fortunately, the problem is solved by
-using a Python <em>distribution</em> and/or <em>package manager</em>.</p>
-<p>For instance, you can install on your computer the popular <a class="reference external" href="https://www.anaconda.com/download/">Anaconda Python
-Distribution</a>.</p>
-<p>For <strong>Linux and MacOS users</strong>, you can access the command line by opening the
-<em>terminal</em> program.</p>
-<p>For <strong>Windows users</strong>, you should first install Anaconda (described above) or
-<code class="docutils literal notranslate"><span class="pre">miniconda</span></code> (described below), which gives you access to the “Anaconda Prompt”
-desktop application. Instructions for this are given on the <a class="reference external" href="https://docs.anaconda.com/anaconda/user-guide/getting-started/#write-a-python-program-using-anaconda-prompt-or-terminal">Anaconda
-Website</a>.
-From the Anaconda Prompt, you should be able to run <code class="docutils literal notranslate"><span class="pre">conda</span></code>.</p>
-</section>
-</section>
-<section id="managing-environments-with-conda">
-<h2>Managing environments with <code class="docutils literal notranslate"><span class="pre">conda</span></code><a class="headerlink" href="#managing-environments-with-conda" title="Link to this heading">#</a></h2>
-<p>Python coupled with a package manager provides a way to make isolated,
-reproducible <em>environments</em> where you have control over all installed packages
-and configurations. Here is <a class="reference external" href="https://medium.com/data-science/conda-essential-concepts-and-tricks-e478ed53b5b">a great short article</a> that contains all the essential concepts and tips about using <code class="docutils literal notranslate"><span class="pre">conda</span></code>.</p>
-<section id="tip-use-lightweight-miniconda">
-<h3>Tip: use lightweight <code class="docutils literal notranslate"><span class="pre">miniconda</span></code><a class="headerlink" href="#tip-use-lightweight-miniconda" title="Link to this heading">#</a></h3>
-<p>Do yourself a favor — use a lightweight installation called
-<a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html"><code class="docutils literal notranslate"><span class="pre">miniconda</span></code></a>. It is very likely that you don’t want the full Anaconda Python Distribution.</p>
-</section>
-</section>
-<section id="environment-for-this-course-workshop">
-<h2>Environment for this course: <code class="docutils literal notranslate"><span class="pre">workshop</span></code><a class="headerlink" href="#environment-for-this-course-workshop" title="Link to this heading">#</a></h2>
-<section id="with-conda-recommended">
-<h3>… with <code class="docutils literal notranslate"><span class="pre">conda</span></code> (recommended)<a class="headerlink" href="#with-conda-recommended" title="Link to this heading">#</a></h3>
-<p>The latest environment specification for this course can be downloaded under the following link as a <a class="reference external" href="https://en.wikipedia.org/wiki/YAML"><code class="docutils literal notranslate"><span class="pre">YAML</span></code>-file</a>:</p>
-<p><a class="github reference external" href="https://github.com/resilient-project/pypsa-workshop-202505/blob/main/environment.yaml">resilient-project/pypsa-workshop-202505</a></p>
-<p>There is a download button at the top-right corner.</p>
-<p>After navigating to the folder where the <code class="docutils literal notranslate"><span class="pre">environment.yaml</span></code> file is stored (<a class="reference external" href="https://tutorials.codebar.io/command-line/introduction/tutorial.html">here</a>’s a tutorial how to navigate with the command line),
-you can reate this environment using <code class="docutils literal notranslate"><span class="pre">conda</span></code></p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>conda env create -f environment.yaml
+  <section class="tex2jax_ignore mathjax_ignore" id="annex-config">
+<h1>Annex Config<a class="headerlink" href="#annex-config" title="Link to this heading">#</a></h1>
+<p>copy of <code class="docutils literal notranslate"><span class="pre">./pypsa-eur/config/test/config.overnight.yaml</span></code></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># SPDX-FileCopyrightText: Contributors to PyPSA-Eur &lt;https://github.com/pypsa/pypsa-eur&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># SPDX-License-Identifier: CC0-1.0</span>
+
+<span class="nt">tutorial</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+<span class="nt">run</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;test-sector-overnight&quot;</span>
+<span class="w">  </span><span class="nt">disable_progressbar</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">shared_resources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">policy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">shared_cutouts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+
+<span class="nt">scenario</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">clusters</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">  </span><span class="nt">sector_opts</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">  </span><span class="nt">planning_horizons</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2030</span>
+
+<span class="nt">countries</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;BE&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="nt">snapshots</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2013-03-01&quot;</span>
+<span class="w">  </span><span class="nt">end</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2013-03-08&quot;</span>
+
+<span class="nt">electricity</span><span class="p">:</span>
+
+<span class="w">  </span><span class="nt">extendable_carriers</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">Generator</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">OCGT</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">StorageUnit</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">battery</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">Store</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">H2</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">Link</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">H2 pipeline</span><span class="p p-Indicator">]</span>
+
+<span class="w">  </span><span class="nt">renewable_carriers</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">solar</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">solar-hsat</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">onwind</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">offwind-ac</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">offwind-dc</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">offwind-float</span><span class="p p-Indicator">]</span>
+
+<span class="nt">atlite</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">default_cutout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">be-03-2013-era5</span>
+<span class="w">  </span><span class="nt">cutouts</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">be-03-2013-era5</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">module</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">era5</span>
+<span class="w">      </span><span class="nt">x</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">4.</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">15.</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">y</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">46.</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">56.</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">time</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;2013-03-01&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;2013-03-08&quot;</span><span class="p p-Indicator">]</span>
+
+<span class="nt">renewable</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">offwind-ac</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">max_depth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">offwind-dc</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">max_depth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">offwind-float</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">max_depth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">min_depth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="nt">clustering</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">temporal</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">resolution_sector</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">24h</span>
+
+<span class="nt">sector</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">gas_network</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">H2_retrofit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+<span class="nt">industry</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">HVC_environment_sequestration_fraction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="w">  </span><span class="nt">waste_to_energy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">waste_to_energy_cc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+<span class="nt">solving</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">solver</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">highs</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">highs-simplex</span>
+<span class="w">  </span><span class="nt">mem</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4000</span>
+
+<span class="w">  </span><span class="nt">check_objective</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">expected_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.96e+08</span>
+
+<span class="nt">plotting</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">map</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">boundaries</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">eu_node_location</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">x</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-5.5</span>
+<span class="w">    </span><span class="nt">y</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">46.</span>
+<span class="w">  </span><span class="nt">costs_max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<span class="w">  </span><span class="nt">costs_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0000001</span>
+<span class="w">  </span><span class="nt">energy_max</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">energy_min</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">energy_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.000001</span>
 </pre></div>
-</div>
-<p>Activate this environment</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>conda activate workshop
-</pre></div>
-</div>
-<p>The environment has to be activated whenever you open a new terminal,
-<em>before</em> starting a new Jupyter window with</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>jupyter lab
-</pre></div>
-</div>
-</section>
-<section id="with-pip">
-<h3>… with <code class="docutils literal notranslate"><span class="pre">pip</span></code><a class="headerlink" href="#with-pip" title="Link to this heading">#</a></h3>
-<p>If you want to use <code class="docutils literal notranslate"><span class="pre">pip</span></code> for managing your environment, download</p>
-<p><a class="github reference external" href="https://github.com/resilient-project/pypsa-workshop-202505/blob/main/requirements.txt">resilient-project/pypsa-workshop-202505</a></p>
-<p>There is a download button at the top-right corner.</p>
-<p>After navigating to the folder where the <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file is stored,
-you can install the required packages with</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install -r requirements.txt
-</pre></div>
-</div>
-<p>This should allow you to start a new Jupyter window:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>jupyter lab
-</pre></div>
-</div>
-</section>
-</section>
-<div class="toctree-wrapper compound">
 </div>
 </section>
 
@@ -530,12 +513,21 @@ you can install the required packages with</p>
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="pypsa-stochastic.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">New features: Stochastic Optimization in PyPSA</p>
+      </div>
+    </a>
     <a class="right-next"
-       href="01-pypsa-intro.html"
+       href="config-big-system.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Introduction to <code class="docutils literal notranslate"><span class="pre">pypsa</span></code> and <code class="docutils literal notranslate"><span class="pre">linopy</span></code>: a simple dispatch problem</p>
+        <p class="prev-next-title">Annex Config</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -545,34 +537,6 @@ you can install the required packages with</p>
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#google-colab">Google Colab</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-your-python-environment-locally">Setting up your Python environment locally</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anaconda">Anaconda</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#managing-environments-with-conda">Managing environments with <code class="docutils literal notranslate"><span class="pre">conda</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tip-use-lightweight-miniconda">Tip: use lightweight <code class="docutils literal notranslate"><span class="pre">miniconda</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-for-this-course-workshop">Environment for this course: <code class="docutils literal notranslate"><span class="pre">workshop</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#with-conda-recommended">… with <code class="docutils literal notranslate"><span class="pre">conda</span></code> (recommended)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#with-pip">… with <code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>
