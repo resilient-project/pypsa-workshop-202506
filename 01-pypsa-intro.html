@@ -1,0 +1,1571 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Introduction to pypsa and linopy: a simple dispatch problem &#8212; PyPSA(-Eur) workshop</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '01-pypsa-intro';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="More pypsa features: more complex dispatch problems" href="02-pypsa-more-features.html" />
+    <link rel="prev" title="Welcome to the workshop!" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo-secondary-light-pypsa.svg" class="logo__image only-light" alt="PyPSA(-Eur) workshop - Home"/>
+    <script>document.write(`<img src="_static/logo-secondary-light-pypsa.svg" class="logo__image only-dark" alt="PyPSA(-Eur) workshop - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to the workshop!
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to <code class="docutils literal notranslate"><span class="pre">pypsa</span></code> and <code class="docutils literal notranslate"><span class="pre">linopy</span></code>: a simple dispatch problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-pypsa-more-features.html">More <code class="docutils literal notranslate"><span class="pre">pypsa</span></code> features: more complex dispatch problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-pypsa-sectors-expansion.html">Advanced models in <code class="docutils literal notranslate"><span class="pre">pypsa</span></code>: capacity expansion planning with sector coupling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pypsa-stochastic.html">(Coming soon) Stochastic optimization with PyPSA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex-python.html">Annex: Intro to the basics of <code class="docutils literal notranslate"><span class="pre">Python</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex-pandas.html">Annex: Tabular data analysis with <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/resilient-project/pypsa-workshop-202506/blob/main/pypsa-workshop-202506/01-pypsa-intro.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/resilient-project/pypsa-workshop-202506" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/resilient-project/pypsa-workshop-202506/issues/new?title=Issue%20on%20page%20%2F01-pypsa-intro.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/01-pypsa-intro.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to pypsa and linopy: a simple dispatch problem</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">Dependencies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-components">Basic components</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting started</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-electricity-market-problem">Simple electricity market problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-basic-network">Building a basic network</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimisation">Optimisation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explore-pypsa-model">Explore pypsa model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#if-time-allows-let-s-write-optimization-problem-manually-amd-reproduce-the-pypsa-model">(If time allows) Let’s write optimization problem manually amd reproduce the PyPSA model</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-pypsa-and-linopy-a-simple-dispatch-problem">
+<h1>Introduction to <code class="docutils literal notranslate"><span class="pre">pypsa</span></code> and <code class="docutils literal notranslate"><span class="pre">linopy</span></code>: a simple dispatch problem<a class="headerlink" href="#introduction-to-pypsa-and-linopy-a-simple-dispatch-problem" title="Link to this heading">#</a></h1>
+<img src="https://github.com/fneum/data-science-for-esm/raw/main/data-science-for-esm/pypsa-logo.png" width="300px" />
+<p>PyPSA stands for <strong>Python for Power System Analysis</strong>.</p>
+<p>PyPSA is an open source Python package for simulating and optimising modern energy systems that include features such as</p>
+<ul class="simple">
+<li><p>conventional generators with unit commitment (ramp-up, ramp-down, start-up, shut-down),</p></li>
+<li><p>time-varying wind and solar generation,</p></li>
+<li><p>energy storage with efficiency losses and inflow/spillage for hydroelectricity</p></li>
+<li><p>coupling to other energy sectors (electricity, transport, heat, industry),</p></li>
+<li><p>conversion between energy carriers (e.g. electricity to hydrogen),</p></li>
+<li><p>transmission networks (AC, DC, other fuels)</p></li>
+</ul>
+<p>PyPSA can be used for a variety of problem types (e.g. electricity market modelling, long-term investment planning, transmission network expansion planning), and is designed to scale well with large networks and long time series.</p>
+<p>Compared to building power system by hand in <code class="docutils literal notranslate"><span class="pre">linopy</span></code>, PyPSA does the following things for you:</p>
+<ul class="simple">
+<li><p>manage data inputs</p></li>
+<li><p>build optimisation problem</p></li>
+<li><p>communicate with the solver</p></li>
+<li><p>retrieve and process optimisation results</p></li>
+<li><p>manage data outputs</p></li>
+</ul>
+<section id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pandas</span></code> for storing data about network components and time series</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">scipy</span></code> for linear algebra and sparse matrix calculations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> and <code class="docutils literal notranslate"><span class="pre">cartopy</span></code> for plotting on a map</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">networkx</span></code> for network calculations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">linopy</span></code> for handling optimisation problems</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Documentation for this package is available at <a class="reference external" href="https://pypsa.readthedocs.io">https://pypsa.readthedocs.io</a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have not yet set up Python on your computer, you can execute this tutorial in your browser via <a class="reference external" href="https://colab.research.google.com/">Google Colab</a>. Click on the rocket in the top right corner and launch “Colab”. If that doesn’t work download the <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code> file and import it in <a class="reference external" href="https://colab.research.google.com/">Google Colab</a>.</p>
+<p>Then install the following packages by executing the following command in a Jupyter cell at the top of the notebook.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>!pip<span class="w"> </span>install<span class="w"> </span>pypsa<span class="w"> </span>highspy
+</pre></div>
+</div>
+</div>
+</section>
+<section id="basic-components">
+<h2>Basic components<a class="headerlink" href="#basic-components" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Component</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://pypsa.readthedocs.io/en/latest/components.html#network">Network</a></p></td>
+<td><p>Container for all components.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://pypsa.readthedocs.io/en/latest/components.html#bus">Bus</a></p></td>
+<td><p>Node where components attach.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://pypsa.readthedocs.io/en/latest/components.html#carrier">Carrier</a></p></td>
+<td><p>Energy carrier or technology (e.g. electricity, hydrogen, gas, coal, oil, biomass, on-/offshore wind, solar). Can track properties such as specific carbon dioxide emissions or nice names and colors for plots.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://pypsa.readthedocs.io/en/latest/components.html#load">Load</a></p></td>
+<td><p>Energy consumer (e.g. electricity demand).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://pypsa.readthedocs.io/en/latest/components.html#generator">Generator</a></p></td>
+<td><p>Generator (e.g. power plant, wind turbine, PV panel).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://pypsa.readthedocs.io/en/latest/components.html#line">Line</a></p></td>
+<td><p>Power distribution and transmission lines (overhead and cables).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://pypsa.readthedocs.io/en/latest/components.html#link">Link</a></p></td>
+<td><p>Links connect two buses with controllable energy flow, direction-control and losses. They can be used to model: <ul><li>HVDC links</li><li>HVAC lines (neglecting KVL, only net transfer capacities (NTCs))</li><li>conversion between carriers (e.g. electricity to hydrogen in electrolysis)</li></ul></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://pypsa.readthedocs.io/en/latest/components.html#storage-unit">StorageUnit</a></p></td>
+<td><p>Storage with fixed nominal energy-to-power ratio.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://pypsa.readthedocs.io/en/latest/components.html#store">Store</a></p></td>
+<td><p>Storage with separately extendable energy capacity.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://pypsa.readthedocs.io/en/latest/components.html#global-constraints">GlobalConstraint</a></p></td>
+<td><p>Constraints affecting many components at once, such as emission limits.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Links in the table lead to documentation for each component.</p>
+</div>
+</section>
+<section id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h2>
+<section id="simple-electricity-market-problem">
+<h3>Simple electricity market problem<a class="headerlink" href="#simple-electricity-market-problem" title="Link to this heading">#</a></h3>
+<p>generator 1: “gas” – marginal cost 70 EUR/MWh – capacity 50 MW</p>
+<p>generator 2: “nuclear” – marginal cost 10 EUR/MWh – capacity 100 MW</p>
+<p>load: “Consumer” – demand 120 MW</p>
+<p>single time step (“now”)</p>
+<p>single node (“Springfield”)</p>
+</section>
+<section id="building-a-basic-network">
+<h3>Building a basic network<a class="headerlink" href="#building-a-basic-network" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># By convention, PyPSA is imported without an alias:</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pypsa</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First, we create a network object which serves as the container for all components</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">pypsa</span><span class="o">.</span><span class="n">Network</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Empty Unnamed PyPSA Network
+---------------------
+Components: none
+Snapshots: 1
+</pre></div>
+</div>
+</div>
+</div>
+<p>The second component we need are buses. <strong>Buses</strong> are the fundamental nodes of the network, to which all other components like loads, generators and transmission lines attach. They enforce energy conservation for all elements feeding in and out of it (i.e. Kirchhoff’s Current Law).</p>
+<p>Components can be added to the network <code class="docutils literal notranslate"><span class="pre">n</span></code> using the <code class="docutils literal notranslate"><span class="pre">n.add()</span></code> function. It takes the component name as a first argument, the name of the component as a second argument and possibly further parameters as keyword arguments. Let’s use this function, to add buses for each country to our network:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;Bus&quot;</span><span class="p">,</span> <span class="s2">&quot;Springfield&quot;</span><span class="p">,</span> <span class="n">v_nom</span><span class="o">=</span><span class="mi">380</span><span class="p">,</span> <span class="n">carrier</span><span class="o">=</span><span class="s2">&quot;AC&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;Springfield&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>For each class of components, the data describing the components is stored in a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>. For example, all static data for buses is stored in <code class="docutils literal notranslate"><span class="pre">n.buses</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">buses</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>v_nom</th>
+      <th>type</th>
+      <th>x</th>
+      <th>y</th>
+      <th>carrier</th>
+      <th>unit</th>
+      <th>location</th>
+      <th>v_mag_pu_set</th>
+      <th>v_mag_pu_min</th>
+      <th>v_mag_pu_max</th>
+      <th>control</th>
+      <th>generator</th>
+      <th>sub_network</th>
+    </tr>
+    <tr>
+      <th>Bus</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Springfield</th>
+      <td>380.0</td>
+      <td></td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>AC</td>
+      <td></td>
+      <td></td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>inf</td>
+      <td>PQ</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>You see there are many more attributes than we specified while adding the buses; many of them are filled with default parameters which were added. You can look up the field description, defaults and status (required input, optional input, output) for buses here <a class="reference external" href="https://pypsa.readthedocs.io/en/latest/components.html#bus">https://pypsa.readthedocs.io/en/latest/components.html#bus</a>, and analogous for all other components.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">n.add()</span></code> function lets you add any component to the network object <code class="docutils literal notranslate"><span class="pre">n</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+    <span class="s2">&quot;Generator&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gas&quot;</span><span class="p">,</span>
+    <span class="n">bus</span><span class="o">=</span><span class="s2">&quot;Springfield&quot;</span><span class="p">,</span>
+    <span class="n">p_nom_extendable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">marginal_cost</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span>  <span class="c1"># €/MWh</span>
+    <span class="n">p_nom</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>  <span class="c1"># MW</span>
+<span class="p">)</span>
+<span class="n">n</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+    <span class="s2">&quot;Generator&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nuclear&quot;</span><span class="p">,</span>
+    <span class="n">bus</span><span class="o">=</span><span class="s2">&quot;Springfield&quot;</span><span class="p">,</span>
+    <span class="n">p_nom_extendable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">marginal_cost</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1"># €/MWh</span>
+    <span class="n">p_nom</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>  <span class="c1"># MW</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;nuclear&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The method <code class="docutils literal notranslate"><span class="pre">n.add()</span></code> also allows you to add multiple components at once. For instance, multiple <strong>carriers</strong> for the fuels with information on specific carbon dioxide emissions, a nice name, and colors for plotting. For this, the function takes the component name as the first argument and then a list of component names and then optional arguments for the parameters. Here, scalar values, lists, dictionary or <code class="docutils literal notranslate"><span class="pre">pandas.Series</span></code> are allowed. The latter two needs keys or indices with the component names.</p>
+<p>As a result, the <code class="docutils literal notranslate"><span class="pre">n.generators</span></code> DataFrame looks like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">generators</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>bus</th>
+      <th>control</th>
+      <th>type</th>
+      <th>p_nom</th>
+      <th>p_nom_mod</th>
+      <th>p_nom_extendable</th>
+      <th>p_nom_min</th>
+      <th>p_nom_max</th>
+      <th>p_min_pu</th>
+      <th>p_max_pu</th>
+      <th>...</th>
+      <th>min_up_time</th>
+      <th>min_down_time</th>
+      <th>up_time_before</th>
+      <th>down_time_before</th>
+      <th>ramp_limit_up</th>
+      <th>ramp_limit_down</th>
+      <th>ramp_limit_start_up</th>
+      <th>ramp_limit_shut_down</th>
+      <th>weight</th>
+      <th>p_nom_opt</th>
+    </tr>
+    <tr>
+      <th>Generator</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>gas</th>
+      <td>Springfield</td>
+      <td>PQ</td>
+      <td></td>
+      <td>50.0</td>
+      <td>0.0</td>
+      <td>False</td>
+      <td>0.0</td>
+      <td>inf</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>nuclear</th>
+      <td>Springfield</td>
+      <td>PQ</td>
+      <td></td>
+      <td>100.0</td>
+      <td>0.0</td>
+      <td>False</td>
+      <td>0.0</td>
+      <td>inf</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>2 rows × 37 columns</p>
+</div></div></div>
+</div>
+<p>Next, we’re going to add the electricity demand.</p>
+<p>A positive value for <code class="docutils literal notranslate"><span class="pre">p_set</span></code> means consumption of power from the bus.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+    <span class="s2">&quot;Load&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Small town&quot;</span><span class="p">,</span>
+    <span class="n">bus</span><span class="o">=</span><span class="s2">&quot;Springfield&quot;</span><span class="p">,</span>
+    <span class="n">p_set</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span>  <span class="c1"># MW</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;Small town&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">loads</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>bus</th>
+      <th>carrier</th>
+      <th>type</th>
+      <th>p_set</th>
+      <th>q_set</th>
+      <th>sign</th>
+      <th>active</th>
+    </tr>
+    <tr>
+      <th>Load</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Small town</th>
+      <td>Springfield</td>
+      <td></td>
+      <td></td>
+      <td>120.0</td>
+      <td>0.0</td>
+      <td>-1.0</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="optimisation">
+<h2>Optimisation<a class="headerlink" href="#optimisation" title="Link to this heading">#</a></h2>
+<p>The design principle of PyPSA is that basically each component is associated with a set of variables and constraints that will be added to the optimisation model based on the input data stored for the components.</p>
+<p>For this dispatch problem, PyPSA will solve an optimisation problem that looks like this</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6da9e481-9ded-4958-b121-29c74a77edfb">
+<span class="eqno">(1)<a class="headerlink" href="#equation-6da9e481-9ded-4958-b121-29c74a77edfb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\min_{g_{s,t};} \sum_{t,s} o_{s} g_{s,t}
+\end{equation}\]</div>
+<p>such that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-82bce247-c7bf-4edc-a93c-0115c801f486">
+<span class="eqno">(2)<a class="headerlink" href="#equation-82bce247-c7bf-4edc-a93c-0115c801f486" title="Permalink to this equation">#</a></span>\[\begin{align}
+0 &amp; \leq g_{s,t} \leq G_{s}  &amp; \text{generation limits : generator} \\
+D_t &amp;= \sum_s g_{s,t} &amp; \text{market clearing : bus} \\
+\end{align}\]</div>
+<p><strong>Decision variables:</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(g_{s,t}\)</span> is the generator dispatch of technology <span class="math notranslate nohighlight">\(s\)</span> at time <span class="math notranslate nohighlight">\(t\)</span></p></li>
+</ul>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(o_{s}\)</span> is the marginal generation cost of technology <span class="math notranslate nohighlight">\(s\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(G_{s}\)</span> is the nominal capacity of technology <span class="math notranslate nohighlight">\(s\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(D_t\)</span> is the power demand in Springfiled at time <span class="math notranslate nohighlight">\(t\)</span></p></li>
+</ul>
+<p>With all input data transferred into the PyPSA’s data structure (<code class="docutils literal notranslate"><span class="pre">network</span></code>), we can now build and run the resulting optimisation problem. In PyPSA, building, solving and retrieving results from the optimisation model is contained in a single function call <code class="docutils literal notranslate"><span class="pre">n.optimize()</span></code>. This function optimizes dispatch and investment decisions for least cost adhering to the constraints defined in the network.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">n.optimize()</span></code> function can take a variety of arguments. The most relevant for the moment is the choice of the solver (e.g. “highs” and “gurobi”). They need to be installed on your computer, to use them here!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">solver_name</span><span class="o">=</span><span class="s2">&quot;highs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:pypsa.consistency:The following buses have carriers which are not defined:
+Index([&#39;Springfield&#39;], dtype=&#39;object&#39;, name=&#39;Bus&#39;)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:linopy.model: Solve problem using Highs solver
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:linopy.io: Writing time: 0.01s
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:linopy.constants: Optimization successful: 
+Status: ok
+Termination condition: optimal
+Solution: 2 primals, 5 duals
+Objective: 2.40e+03
+Solver model: available
+Solver message: Optimal
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:pypsa.optimization.optimize:The shadow-prices of the constraints Generator-fix-p-lower, Generator-fix-p-upper were not assigned to the network.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running HiGHS 1.11.0 (git hash: 364c83a): Copyright (c) 2025 HiGHS under MIT licence terms
+LP   linopy-problem-2kc__ujh has 5 rows; 2 cols; 6 nonzeros
+Coefficient ranges:
+  Matrix [1e+00, 1e+00]
+  Cost   [1e+01, 7e+01]
+  Bound  [0e+00, 0e+00]
+  RHS    [5e+01, 1e+02]
+Presolving model
+0 rows, 0 cols, 0 nonzeros  0s
+0 rows, 0 cols, 0 nonzeros  0s
+Presolve : Reductions: rows 0(-5); columns 0(-2); elements 0(-6) - Reduced to empty
+Solving the original LP from the solution after postsolve
+Model name          : linopy-problem-2kc__ujh
+Model status        : Optimal
+Objective value     :  2.4000000000e+03
+P-D objective error :  0.0000000000e+00
+HiGHS run time      :          0.00
+Writing the solution to /tmp/linopy-solve-p8l7o6o1.sol
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;ok&#39;, &#39;optimal&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s have a look at the results. The network object <code class="docutils literal notranslate"><span class="pre">n</span></code> contains now the objective value and the results for the decision variables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">objective</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2400.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since the power flow and dispatch are generally time-varying quantities, these are stored in a different locations than e.g. <code class="docutils literal notranslate"><span class="pre">n.generators</span></code>. They are stored in <code class="docutils literal notranslate"><span class="pre">n.generators_t</span></code>. Thus, to find out the dispatch of the generators, run</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">generators_t</span><span class="o">.</span><span class="n">p</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Generator</th>
+      <th>gas</th>
+      <th>nuclear</th>
+    </tr>
+    <tr>
+      <th>snapshot</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>now</th>
+      <td>20.0</td>
+      <td>100.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">buses_t</span><span class="o">.</span><span class="n">marginal_price</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Bus</th>
+      <th>Springfield</th>
+    </tr>
+    <tr>
+      <th>snapshot</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>now</th>
+      <td>70.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">generators_t</span><span class="o">.</span><span class="n">mu_upper</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Generator</th>
+    </tr>
+    <tr>
+      <th>snapshot</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>now</th>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="explore-pypsa-model">
+<h3>Explore pypsa model<a class="headerlink" href="#explore-pypsa-model" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">model</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Linopy LP model
+===============
+
+Variables:
+----------
+ * Generator-p (snapshot, Generator)
+
+Constraints:
+------------
+ * Generator-fix-p-lower (snapshot, Generator-fix)
+ * Generator-fix-p-upper (snapshot, Generator-fix)
+ * Bus-nodal_balance (Bus, snapshot)
+
+Status:
+-------
+ok
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">constraints</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>linopy.model.Constraints
+------------------------
+ * Generator-fix-p-lower (snapshot, Generator-fix)
+ * Generator-fix-p-upper (snapshot, Generator-fix)
+ * Bus-nodal_balance (Bus, snapshot)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="s2">&quot;Generator-fix-p-upper&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Constraint `Generator-fix-p-upper` [snapshot: 1, Generator-fix: 2]:
+-------------------------------------------------------------------
+[now, gas]: +1 Generator-p[now, gas]         ≤ 50.0
+[now, nuclear]: +1 Generator-p[now, nuclear] ≤ 100.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="s2">&quot;Bus-nodal_balance&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Constraint `Bus-nodal_balance` [Bus: 1, snapshot: 1]:
+-----------------------------------------------------
+[Springfield, now]: +1 Generator-p[now, gas] + 1 Generator-p[now, nuclear] = 120.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">objective</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Objective:
+----------
+LinearExpression: +70 Generator-p[now, gas] + 10 Generator-p[now, nuclear]
+Sense: min
+Value: 2400.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="if-time-allows-let-s-write-optimization-problem-manually-amd-reproduce-the-pypsa-model">
+<h3>(If time allows) Let’s write optimization problem manually amd reproduce the PyPSA model<a class="headerlink" href="#if-time-allows-let-s-write-optimization-problem-manually-amd-reproduce-the-pypsa-model" title="Link to this heading">#</a></h3>
+<p>PyPSA optimisation module is based on <a class="reference external" href="https://linopy.readthedocs.io/en/latest/index.html">Linopy</a> — an open-source framework for formulating, solving, and analyzing optimization problems with Python.</p>
+<p>With Linopy, you can create optimization models within Python that consist of decision variables, constraints, and optimization objectives. You can then solve these instances using a variety of commercial and open-source solvers (specialised software).</p>
+<p><a class="reference external" href="https://github.com/pypsa/linopy">Linopy</a> supports a wide range of problem types, including:</p>
+<ul class="simple">
+<li><p><strong>Linear programming</strong></p></li>
+<li><p>Integer programming</p></li>
+<li><p>Mixed-integer programming</p></li>
+<li><p>Quadratic programming</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Documentation for this package is available at <a class="reference external" href="https://linopy.readthedocs.io">https://linopy.readthedocs.io</a>.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">linopy</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># remove all constraints</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">constraints</span><span class="p">):</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">remove_constraints</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">constraints</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>linopy.model.Constraints
+------------------------
+&lt;empty&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># remove objective</span>
+<span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">expression</span> <span class="o">=</span> <span class="n">linopy</span><span class="o">.</span><span class="n">LinearExpression</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">expression</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinearExpression
+----------------
++0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set objective expression to the problem</span>
+<span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">expression</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;Generator-p&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;gas&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">marginal_cost</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">]</span>
+    <span class="o">+</span> <span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;Generator-p&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;nuclear&quot;</span><span class="p">]</span>
+    <span class="o">*</span> <span class="n">n</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">marginal_cost</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;nuclear&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">25</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># set objective expression to the problem</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">expression</span> <span class="o">=</span> <span class="p">(</span>
+<span class="ne">----&gt; </span><span class="mi">3</span>     <span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;Generator-p&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;gas&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">marginal_cost</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="o">+</span> <span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;Generator-p&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;nuclear&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="o">*</span> <span class="n">n</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">marginal_cost</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;nuclear&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.10/x64/lib/python3.12/site-packages/linopy/variables.py:396,</span> in <span class="ni">Variable.__mul__</span><span class="nt">(self, other)</span>
+<span class="g g-Whitespace">    </span><span class="mi">391</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">392</span>         <span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="n">expressions</span><span class="o">.</span><span class="n">LinearExpression</span><span class="p">,</span> <span class="n">Variable</span><span class="p">,</span> <span class="n">ScalarVariable</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">393</span>     <span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">394</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_linexpr</span><span class="p">()</span> <span class="o">*</span> <span class="n">other</span>
+<span class="ne">--&gt; </span><span class="mi">396</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_linexpr</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">397</span> <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">398</span>     <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.10/x64/lib/python3.12/site-packages/linopy/variables.py:316,</span> in <span class="ni">Variable.to_linexpr</span><span class="nt">(self, coefficient)</span>
+<span class="g g-Whitespace">    </span><span class="mi">293</span> <span class="k">def</span><span class="w"> </span><span class="nf">to_linexpr</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">294</span>     <span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">295</span>     <span class="n">coefficient</span><span class="p">:</span> <span class="nb">int</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>    <span class="mi">300</span>     <span class="o">|</span> <span class="n">DataArray</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">301</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">expressions</span><span class="o">.</span><span class="n">LinearExpression</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">302</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">303</span><span class="sd">     Create a linear expression from the variables.</span>
+<span class="g g-Whitespace">    </span><span class="mi">304</span><span class="sd"> </span>
+<span class="sd">   (...)    314         Linear expression with the variables and coefficients.</span>
+<span class="g g-Whitespace">    </span><span class="mi">315</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">316</span>     <span class="n">coefficient</span> <span class="o">=</span> <span class="n">as_dataarray</span><span class="p">(</span><span class="n">coefficient</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dims</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">317</span>     <span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">({</span><span class="s2">&quot;coeffs&quot;</span><span class="p">:</span> <span class="n">coefficient</span><span class="p">,</span> <span class="s2">&quot;vars&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">})</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">318</span>         <span class="n">TERM_DIM</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+<span class="g g-Whitespace">    </span><span class="mi">319</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">320</span>     <span class="k">return</span> <span class="n">expressions</span><span class="o">.</span><span class="n">LinearExpression</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.10/x64/lib/python3.12/site-packages/linopy/common.py:258,</span> in <span class="ni">as_dataarray</span><span class="nt">(arr, coords, dims, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">256</span>     <span class="n">arr</span> <span class="o">=</span> <span class="n">numpy_to_dataarray</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="n">dims</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">257</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+<span class="ne">--&gt; </span><span class="mi">258</span>     <span class="n">arr</span> <span class="o">=</span> <span class="n">DataArray</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="n">dims</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">260</span> <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">DataArray</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">261</span>     <span class="n">supported_types</span> <span class="o">=</span> <span class="p">[</span>
+<span class="g g-Whitespace">    </span><span class="mi">262</span>         <span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">263</span>         <span class="nb">str</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>    <span class="mi">269</span>         <span class="n">DataArray</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">270</span>     <span class="p">]</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.10/x64/lib/python3.12/site-packages/xarray/core/dataarray.py:461,</span> in <span class="ni">DataArray.__init__</span><span class="nt">(self, data, coords, dims, name, attrs, indexes, fastpath)</span>
+<span class="g g-Whitespace">    </span><span class="mi">459</span> <span class="n">data</span> <span class="o">=</span> <span class="n">_check_data_shape</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">dims</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">460</span> <span class="n">data</span> <span class="o">=</span> <span class="n">as_compatible_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">461</span> <span class="n">coords</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">_infer_coords_and_dims</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">dims</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">462</span> <span class="n">variable</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">fastpath</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">464</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">Coordinates</span><span class="p">):</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.10/x64/lib/python3.12/site-packages/xarray/core/dataarray.py:166,</span> in <span class="ni">_infer_coords_and_dims</span><span class="nt">(shape, coords, dims)</span>
+<span class="g g-Whitespace">    </span><span class="mi">164</span> <span class="n">dims_tuple</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">dims</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">165</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dims_tuple</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">166</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">167</span>         <span class="s2">&quot;different number of dimensions on data &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">168</span>         <span class="sa">f</span><span class="s2">&quot;and dims: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2"> vs </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dims_tuple</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">169</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">170</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dims_tuple</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">171</span>     <span class="k">if</span> <span class="ow">not</span> <span class="n">hashable</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+
+<span class="ne">ValueError</span>: different number of dimensions on data and dims: 0 vs 1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># check it is there</span>
+<span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">objective</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_constraints</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;Generator-p&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;Generator&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span><span class="o">.</span><span class="n">loads</span><span class="o">.</span><span class="n">p_set</span><span class="p">[</span><span class="s2">&quot;Small town&quot;</span><span class="p">],</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;nodal_balance&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_constraints</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;Generator-p&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;gas&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;p_lower_gas&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_constraints</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;Generator-p&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;nuclear&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;p_lower_coal&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_constraints</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;Generator-p&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;gas&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">p_nom</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">],</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;p_upper_gas&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_constraints</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;Generator-p&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;nuclear&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">p_nom</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;nuclear&quot;</span><span class="p">],</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;p_upper_nuclear&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># check that we did a good job</span>
+<span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">constraints</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s ensure that we get the same results as when using the <code class="docutils literal notranslate"><span class="pre">n.optimize()</span></code> function</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">solver_name</span><span class="o">=</span><span class="s2">&quot;highs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">generators_t</span><span class="o">.</span><span class="n">p</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: ""
+        },
+        kernelOptions: {
+            name: "",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = ''</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Welcome to the workshop!</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="02-pypsa-more-features.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">More <code class="docutils literal notranslate"><span class="pre">pypsa</span></code> features: more complex dispatch problems</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">Dependencies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-components">Basic components</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting started</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-electricity-market-problem">Simple electricity market problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-basic-network">Building a basic network</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimisation">Optimisation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explore-pypsa-model">Explore pypsa model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#if-time-allows-let-s-write-optimization-problem-manually-amd-reproduce-the-pypsa-model">(If time allows) Let’s write optimization problem manually amd reproduce the PyPSA model</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Marta Victoria, Fabian Neumann, Iegor Riepin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

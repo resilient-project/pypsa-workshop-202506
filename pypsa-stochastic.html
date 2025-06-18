@@ -1,0 +1,859 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>New features: Stochastic Optimization in PyPSA &#8212; PyPSA(-Eur) workshop</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'pypsa-stochastic';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Annex: Intro to the basics of Python" href="annex-python.html" />
+    <link rel="prev" title="Advanced models in pypsa: capacity expansion planning with sector coupling" href="03-pypsa-sectors-expansion.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo-secondary-light-pypsa.svg" class="logo__image only-light" alt="PyPSA(-Eur) workshop - Home"/>
+    <script>document.write(`<img src="_static/logo-secondary-light-pypsa.svg" class="logo__image only-dark" alt="PyPSA(-Eur) workshop - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to the workshop!
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-pypsa-intro.html">Introduction to <code class="docutils literal notranslate"><span class="pre">pypsa</span></code> and <code class="docutils literal notranslate"><span class="pre">linopy</span></code>: a simple dispatch problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-pypsa-more-features.html">More <code class="docutils literal notranslate"><span class="pre">pypsa</span></code> features: more complex dispatch problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-pypsa-sectors-expansion.html">Advanced models in <code class="docutils literal notranslate"><span class="pre">pypsa</span></code>: capacity expansion planning with sector coupling</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">(Coming soon) Stochastic optimization with PyPSA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex-python.html">Annex: Intro to the basics of <code class="docutils literal notranslate"><span class="pre">Python</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex-pandas.html">Annex: Tabular data analysis with <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/resilient-project/pypsa-workshop-202506" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/resilient-project/pypsa-workshop-202506/issues/new?title=Issue%20on%20page%20%2Fpypsa-stochastic.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/pypsa-stochastic.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>New features: Stochastic Optimization in PyPSA</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="new-features-stochastic-optimization-in-pypsa">
+<h1>New features: Stochastic Optimization in PyPSA<a class="headerlink" href="#new-features-stochastic-optimization-in-pypsa" title="Link to this heading">#</a></h1>
+<p>Stochastic optimization will be available in the next PyPSA release (v1.0) in June/July 2025.</p>
+<p>Join us for a <a class="reference external" href="https://www.linkedin.com/posts/lukas-trippe-29409b168_energymodeling-opensource-pypsa-activity-7328025966625144833--WQT?utm_source=share&amp;amp;utm_medium=member_desktop&amp;amp;rcm=ACoAADhk2oEBLgmYCVN1a_pvp6Q2ezECxNhJekw">3rd PyPSA User Meeting</a> live stream event on 2 July 2025 where we will present the new features and discuss the future of PyPSA.</p>
+<p>This example works with the development PyPSA branch: <a class="github reference external" href="https://github.com/PyPSA/PyPSA/tree/new-opt-stoch">PyPSA/PyPSA</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Interactive Example: Stochastic Network Optimization with PyPSA</span>
+
+<span class="sd">Three model implementations:</span>
+<span class="sd">    1. Deterministic optimization over gas-price scenarios</span>
+<span class="sd">    2. Stochastic optimization via PyPSA API</span>
+<span class="sd">    3. Manual stochastic model construction with linopy</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Step 1: Imports and Configuration</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataArray</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pypsa</span>
+
+
+<span class="c1"># Plot helpers</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_capacity</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Capacity Mix&quot;</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Scenario&quot;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Capacity (MW)&quot;</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="n">color_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot capacity mix as stacked bar chart</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">color_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">color_map</span> <span class="o">=</span> <span class="n">COLOR_MAP</span>
+
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;gray&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">stacked</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="n">ylabel</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="n">rotation</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;right&quot;</span> <span class="k">if</span> <span class="n">rotation</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;center&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">ax</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_cost</span><span class="p">(</span>
+    <span class="n">series</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Total Cost&quot;</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Scenario&quot;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;EUR&quot;</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot costs as bar chart</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="n">ylabel</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="n">rotation</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;right&quot;</span> <span class="k">if</span> <span class="n">rotation</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;center&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">ax</span>
+
+
+<span class="c1"># Scenario definitions</span>
+<span class="n">SCENARIOS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;low&quot;</span><span class="p">,</span> <span class="s2">&quot;med&quot;</span><span class="p">,</span> <span class="s2">&quot;high&quot;</span><span class="p">]</span>
+<span class="n">GAS_PRICES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;low&quot;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s2">&quot;med&quot;</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span> <span class="s2">&quot;high&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">}</span>
+<span class="n">PROB</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;low&quot;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span> <span class="s2">&quot;med&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span> <span class="s2">&quot;high&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">}</span>
+<span class="n">BASE</span> <span class="o">=</span> <span class="s2">&quot;low&quot;</span>
+<span class="n">FREQ</span> <span class="o">=</span> <span class="s2">&quot;3h&quot;</span>
+<span class="n">LOAD_MW</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">SOLVER</span> <span class="o">=</span> <span class="s2">&quot;highs&quot;</span>
+<span class="n">TS_URL</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;https://tubcloud.tu-berlin.de/s/pKttFadrbTKSJKF/download/time-series-lecture-2.csv&quot;</span>
+<span class="p">)</span>
+
+
+<span class="c1"># Technology specs</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">annuity</span><span class="p">(</span><span class="n">life</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute capital recovery factor.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">rate</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">rate</span><span class="p">)</span> <span class="o">**</span> <span class="o">-</span><span class="n">life</span><span class="p">)</span> <span class="k">if</span> <span class="n">rate</span> <span class="k">else</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">life</span>
+
+
+<span class="n">TECH</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;solar&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;profile&quot;</span><span class="p">:</span> <span class="s2">&quot;solar&quot;</span><span class="p">,</span> <span class="s2">&quot;inv&quot;</span><span class="p">:</span> <span class="mf">1e6</span><span class="p">,</span> <span class="s2">&quot;m_cost&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">},</span>
+    <span class="s2">&quot;wind&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;profile&quot;</span><span class="p">:</span> <span class="s2">&quot;onwind&quot;</span><span class="p">,</span> <span class="s2">&quot;inv&quot;</span><span class="p">:</span> <span class="mf">2e6</span><span class="p">,</span> <span class="s2">&quot;m_cost&quot;</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">},</span>
+    <span class="s2">&quot;gas&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;inv&quot;</span><span class="p">:</span> <span class="mf">7e5</span><span class="p">,</span> <span class="s2">&quot;eff&quot;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">},</span>
+    <span class="s2">&quot;lignite&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;inv&quot;</span><span class="p">:</span> <span class="mf">1.3e6</span><span class="p">,</span> <span class="s2">&quot;eff&quot;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span> <span class="s2">&quot;m_cost&quot;</span><span class="p">:</span> <span class="mi">130</span><span class="p">},</span>
+<span class="p">}</span>
+<span class="n">FOM</span><span class="p">,</span> <span class="n">DR</span><span class="p">,</span> <span class="n">LIFE</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">25</span>
+<span class="k">for</span> <span class="n">cfg</span> <span class="ow">in</span> <span class="n">TECH</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;fixed_cost&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">annuity</span><span class="p">(</span><span class="n">LIFE</span><span class="p">,</span> <span class="n">DR</span><span class="p">)</span> <span class="o">+</span> <span class="n">FOM</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> <span class="o">*</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;inv&quot;</span><span class="p">]</span>
+
+<span class="n">COLOR_MAP</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;solar&quot;</span><span class="p">:</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;wind&quot;</span><span class="p">:</span> <span class="s2">&quot;skyblue&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gas&quot;</span><span class="p">:</span> <span class="s2">&quot;brown&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lignite&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># Step 2: Load Time Series</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">TS_URL</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">FREQ</span><span class="p">)</span><span class="o">.</span><span class="n">asfreq</span><span class="p">()</span>
+
+
+<span class="c1">###########################################</span>
+<span class="c1"># Step 3: Build toy network &amp; run deterministic scenarios</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_network</span><span class="p">(</span><span class="n">gas_price</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create PyPSA network:</span>
+<span class="sd">      - DE bus and constant load</span>
+<span class="sd">      - extendable generators for solar, wind, gas, lignite</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">pypsa</span><span class="o">.</span><span class="n">Network</span><span class="p">()</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">set_snapshots</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">snapshot_weightings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">FREQ</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">index</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;Bus&quot;</span><span class="p">,</span> <span class="s2">&quot;DE&quot;</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;Load&quot;</span><span class="p">,</span> <span class="s2">&quot;DE_load&quot;</span><span class="p">,</span> <span class="n">bus</span><span class="o">=</span><span class="s2">&quot;DE&quot;</span><span class="p">,</span> <span class="n">p_set</span><span class="o">=</span><span class="n">LOAD_MW</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">tech</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;solar&quot;</span><span class="p">,</span> <span class="s2">&quot;wind&quot;</span><span class="p">]:</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="n">TECH</span><span class="p">[</span><span class="n">tech</span><span class="p">]</span>
+        <span class="n">n</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="s2">&quot;Generator&quot;</span><span class="p">,</span>
+            <span class="n">tech</span><span class="p">,</span>
+            <span class="n">bus</span><span class="o">=</span><span class="s2">&quot;DE&quot;</span><span class="p">,</span>
+            <span class="n">p_nom_extendable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">p_max_pu</span><span class="o">=</span><span class="n">ts</span><span class="p">[</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;profile&quot;</span><span class="p">]],</span>
+            <span class="n">capital_cost</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;fixed_cost&quot;</span><span class="p">],</span>
+            <span class="n">marginal_cost</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;m_cost&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+    <span class="k">for</span> <span class="n">tech</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">,</span> <span class="s2">&quot;lignite&quot;</span><span class="p">]:</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="n">TECH</span><span class="p">[</span><span class="n">tech</span><span class="p">]</span>
+        <span class="n">mc</span> <span class="o">=</span> <span class="p">(</span><span class="n">gas_price</span> <span class="o">/</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;eff&quot;</span><span class="p">))</span> <span class="k">if</span> <span class="n">tech</span> <span class="o">==</span> <span class="s2">&quot;gas&quot;</span> <span class="k">else</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;m_cost&quot;</span><span class="p">]</span>
+        <span class="n">n</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="s2">&quot;Generator&quot;</span><span class="p">,</span>
+            <span class="n">tech</span><span class="p">,</span>
+            <span class="n">bus</span><span class="o">=</span><span class="s2">&quot;DE&quot;</span><span class="p">,</span>
+            <span class="n">p_nom_extendable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">efficiency</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;eff&quot;</span><span class="p">),</span>
+            <span class="n">capital_cost</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;fixed_cost&quot;</span><span class="p">],</span>
+            <span class="n">marginal_cost</span><span class="o">=</span><span class="n">mc</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">n</span>
+
+
+<span class="n">caps_det</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">SCENARIOS</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">TECH</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">objs_det</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">SCENARIOS</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">sc</span> <span class="ow">in</span> <span class="n">SCENARIOS</span><span class="p">:</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">build_network</span><span class="p">(</span><span class="n">GAS_PRICES</span><span class="p">[</span><span class="n">sc</span><span class="p">])</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">solver_name</span><span class="o">=</span><span class="n">SOLVER</span><span class="p">)</span>
+    <span class="n">caps_det</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sc</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">p_nom_opt</span>
+    <span class="n">objs_det</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sc</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">objective</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Linopy LP model</span>
+<span class="sd">===============</span>
+
+<span class="sd">Variables:</span>
+<span class="sd">----------</span>
+<span class="sd"> * Generator-p_nom (Generator-ext)</span>
+<span class="sd"> * Generator-p (snapshot, Generator)</span>
+
+<span class="sd">Constraints:</span>
+<span class="sd">------------</span>
+<span class="sd"> * Generator-ext-p_nom-lower (Generator-ext)</span>
+<span class="sd"> * Generator-ext-p_nom-upper (Generator-ext)</span>
+<span class="sd"> * Generator-ext-p-lower (snapshot, Generator-ext)</span>
+<span class="sd"> * Generator-ext-p-upper (snapshot, Generator-ext)</span>
+<span class="sd"> * Bus-nodal_balance (Bus, snapshot)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Step 4: Plot Deterministic Results</span>
+<span class="n">plot_capacity</span><span class="p">(</span><span class="n">caps_det</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Deterministic Capacity Mix&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plot_cost</span><span class="p">(</span><span class="n">objs_det</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Deterministic Total Cost&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1">###########################################</span>
+<span class="c1"># Step 5: Build stochastic network with PyPSA API</span>
+
+<span class="n">n_stoch</span> <span class="o">=</span> <span class="n">build_network</span><span class="p">(</span><span class="n">GAS_PRICES</span><span class="p">[</span><span class="n">BASE</span><span class="p">])</span>
+
+<span class="c1"># Adding scenarios &amp; probabilities to the network are super easy</span>
+<span class="n">n_stoch</span><span class="o">.</span><span class="n">set_scenarios</span><span class="p">(</span><span class="n">PROB</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Unnamed Stochastic PyPSA Network</span>
+<span class="sd">--------------------------------</span>
+<span class="sd">Components:</span>
+<span class="sd"> - Bus: 3</span>
+<span class="sd"> - Generator: 12</span>
+<span class="sd"> - Load: 3</span>
+<span class="sd">Snapshots: 2920</span>
+<span class="sd">Scenarios: 3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># n_stoch</span>
+<span class="c1"># n_stoch.scenarios</span>
+<span class="c1"># n_stoch.generators</span>
+<span class="c1"># n_stoch.generators_t.p_max_pu</span>
+<span class="c1"># n_stoch.generators.loc[:, &quot;marginal_cost&quot;]</span>
+<span class="c1"># n_stoch.optimize.create_model()</span>
+<span class="c1"># n_stoch.model.constraints[&#39;Generator-ext-p-lower&#39;]</span>
+
+<span class="c1"># Set data that is varying by scenario</span>
+<span class="k">for</span> <span class="n">sc</span> <span class="ow">in</span> <span class="n">SCENARIOS</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">sc</span> <span class="o">!=</span> <span class="n">BASE</span><span class="p">:</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="s2">&quot;gas&quot;</span><span class="p">)</span>
+        <span class="n">n_stoch</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s2">&quot;marginal_cost&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">GAS_PRICES</span><span class="p">[</span><span class="n">sc</span><span class="p">]</span> <span class="o">/</span> <span class="n">n_stoch</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s2">&quot;efficiency&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+
+<span class="n">n_stoch</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">solver_name</span><span class="o">=</span><span class="n">SOLVER</span><span class="p">)</span>
+<span class="n">caps_api</span> <span class="o">=</span> <span class="n">n_stoch</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">p_nom_opt</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="s2">&quot;med&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;scenario&quot;</span><span class="p">)</span>
+<span class="n">obj_api</span> <span class="o">=</span> <span class="n">n_stoch</span><span class="o">.</span><span class="n">objective</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Linopy LP model</span>
+<span class="sd">===============</span>
+
+<span class="sd">Variables:</span>
+<span class="sd">----------</span>
+<span class="sd"> * Generator-p_nom (component)</span>
+<span class="sd"> * Generator-p (scenario, component, snapshot)</span>
+
+<span class="sd">Constraints:</span>
+<span class="sd">------------</span>
+<span class="sd"> * Generator-ext-p_nom-lower (component, scenario)</span>
+<span class="sd"> * Generator-ext-p-lower (scenario, component, snapshot)</span>
+<span class="sd"> * Generator-ext-p-upper (scenario, component, snapshot)</span>
+<span class="sd"> * Bus-nodal_balance (component, scenario, snapshot)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Step 6: Plot API Stochastic Results</span>
+<span class="n">caps_all</span> <span class="o">=</span> <span class="n">caps_det</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">caps_all</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Stochastic API&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">caps_api</span>
+<span class="n">plot_capacity</span><span class="p">(</span><span class="n">caps_all</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Capacity Mix: Deterministic + Stochastic&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">objs_all</span> <span class="o">=</span> <span class="n">objs_det</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">objs_all</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Stochastic API&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj_api</span>
+<span class="n">plot_cost</span><span class="p">(</span><span class="n">objs_all</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Total Cost: Deterministic + Stochastic&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1">###########################################</span>
+<span class="c1"># Step 7: Let&#39;s manually formulate stochastic problem to reproduce the results</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pypsa.components.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">as_components</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">linopy.expressions</span><span class="w"> </span><span class="kn">import</span> <span class="n">merge</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">add_stochastic</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Adds scenarios to default pypsa optimization problem:</span>
+<span class="sd">      - declare dispatch vars additional scenarios</span>
+<span class="sd">      - add capacity and nodal balance constraints per scenario</span>
+<span class="sd">      - append objective terms and weight by scenario probabilities</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
+    <span class="n">sns</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">snapshots</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">as_components</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s2">&quot;Generator&quot;</span><span class="p">)</span>
+    <span class="n">cap</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;Generator-p_nom&quot;</span><span class="p">]</span>
+    <span class="n">min_pu</span><span class="p">,</span> <span class="n">max_pu</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">get_bounds_pu</span><span class="p">(</span><span class="n">sns</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">sc</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;med&quot;</span><span class="p">,</span> <span class="s2">&quot;high&quot;</span><span class="p">]:</span>
+        <span class="c1"># operational constraints</span>
+        <span class="n">var</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Generator-p-</span><span class="si">{</span><span class="n">sc</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">disp</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">add_variables</span><span class="p">(</span><span class="n">coords</span><span class="o">=</span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;Generator-p&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">var</span><span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">add_constraints</span><span class="p">(</span><span class="n">disp</span> <span class="o">&lt;=</span> <span class="n">max_pu</span> <span class="o">*</span> <span class="n">cap</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Generator-ext-p-upper-</span><span class="si">{</span><span class="n">sc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">add_constraints</span><span class="p">(</span><span class="n">disp</span> <span class="o">&gt;=</span> <span class="n">min_pu</span> <span class="o">*</span> <span class="n">cap</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Generator-ext-p-lower-</span><span class="si">{</span><span class="n">sc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># nodal balance constraints</span>
+        <span class="n">buses</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">to_xarray</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;Bus&quot;</span><span class="p">)</span>
+        <span class="n">lhs</span> <span class="o">=</span> <span class="p">(</span><span class="n">DataArray</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">disp</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">buses</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">load</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">components</span><span class="p">[</span><span class="s2">&quot;Load&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">as_xarray</span><span class="p">(</span><span class="s2">&quot;p_set&quot;</span><span class="p">,</span> <span class="n">sns</span><span class="p">)</span>
+        <span class="n">rhs</span> <span class="o">=</span> <span class="n">load</span><span class="o">.</span><span class="n">swap_dims</span><span class="p">({</span><span class="s2">&quot;component&quot;</span><span class="p">:</span> <span class="s2">&quot;Bus&quot;</span><span class="p">})</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">add_constraints</span><span class="p">(</span><span class="n">lhs</span> <span class="o">==</span> <span class="n">rhs</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Bus-nodal-</span><span class="si">{</span><span class="n">sc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">snapshot_weightings</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sns</span><span class="p">]</span>
+    <span class="n">w_da</span> <span class="o">=</span> <span class="n">DataArray</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;snapshot&quot;</span><span class="p">:</span> <span class="n">sns</span><span class="p">},</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;snapshot&quot;</span><span class="p">])</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">sc</span> <span class="ow">in</span> <span class="n">SCENARIOS</span><span class="p">:</span>
+        <span class="n">disp</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;Generator-p&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">sc</span> <span class="o">==</span> <span class="n">BASE</span> <span class="k">else</span> <span class="n">m</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Generator-p-</span><span class="si">{</span><span class="n">sc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+        <span class="n">cm</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">components</span><span class="p">[</span><span class="s2">&quot;Generator&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">as_xarray</span><span class="p">(</span><span class="s2">&quot;marginal_cost&quot;</span><span class="p">,</span> <span class="n">sns</span><span class="p">)</span>
+        <span class="n">cm</span><span class="o">.</span><span class="n">loc</span><span class="p">[{</span><span class="s2">&quot;component&quot;</span><span class="p">:</span> <span class="s2">&quot;gas&quot;</span><span class="p">}]</span> <span class="o">=</span> <span class="n">GAS_PRICES</span><span class="p">[</span><span class="n">sc</span><span class="p">]</span> <span class="o">/</span> <span class="n">TECH</span><span class="p">[</span><span class="s2">&quot;gas&quot;</span><span class="p">][</span><span class="s2">&quot;eff&quot;</span><span class="p">]</span>
+        <span class="n">cm</span> <span class="o">=</span> <span class="n">cm</span> <span class="o">*</span> <span class="n">w_da</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">disp</span> <span class="o">*</span> <span class="n">PROB</span><span class="p">[</span><span class="n">sc</span><span class="p">]</span> <span class="o">*</span> <span class="n">cm</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="n">cap_cost</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">as_xarray</span><span class="p">(</span><span class="s2">&quot;capital_cost&quot;</span><span class="p">)</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">cap</span> <span class="o">*</span> <span class="n">cap_cost</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">objective</span> <span class="o">=</span> <span class="n">merge</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+
+<span class="n">n_manual_stoch</span> <span class="o">=</span> <span class="n">build_network</span><span class="p">(</span><span class="n">GAS_PRICES</span><span class="p">[</span><span class="s2">&quot;low&quot;</span><span class="p">])</span>
+<span class="n">add_stochastic</span><span class="p">(</span><span class="n">n_manual_stoch</span><span class="p">)</span>
+
+<span class="n">n_manual_stoch</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">solve_model</span><span class="p">(</span><span class="n">solver_name</span><span class="o">=</span><span class="n">SOLVER</span><span class="p">)</span>
+
+<span class="n">caps_manual_stoch</span> <span class="o">=</span> <span class="n">n_manual_stoch</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">p_nom_opt</span>
+<span class="n">obj_manual_stoch</span> <span class="o">=</span> <span class="n">n_manual_stoch</span><span class="o">.</span><span class="n">objective</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Manual Stochastic Capacities (MW):&quot;</span><span class="p">,</span> <span class="n">caps_manual_stoch</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Manual Stochastic Objective:&quot;</span><span class="p">,</span> <span class="n">obj_manual_stoch</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Linopy LP model</span>
+<span class="sd">===============</span>
+
+<span class="sd">Variables:</span>
+<span class="sd">----------</span>
+<span class="sd"> * Generator-p_nom (component)</span>
+<span class="sd"> * Generator-p (snapshot, component)</span>
+<span class="sd"> * Generator-p-med (snapshot, component)</span>
+<span class="sd"> * Generator-p-high (snapshot, component)</span>
+
+<span class="sd">Constraints:</span>
+<span class="sd">------------</span>
+<span class="sd"> * Generator-ext-p_nom-lower (component)</span>
+<span class="sd"> * Generator-ext-p-lower (snapshot, component)</span>
+<span class="sd"> * Generator-ext-p-upper (snapshot, component)</span>
+<span class="sd"> * Bus-nodal_balance (component, snapshot)</span>
+<span class="sd"> * Generator-ext-p-upper-med (snapshot, component)</span>
+<span class="sd"> * Generator-ext-p-lower-med (snapshot, component)</span>
+<span class="sd"> * Bus-nodal-med (Bus, component, snapshot)</span>
+<span class="sd"> * Generator-ext-p-upper-high (snapshot, component)</span>
+<span class="sd"> * Generator-ext-p-lower-high (snapshot, component)</span>
+<span class="sd"> * Bus-nodal-high (Bus, component, snapshot)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1"># Step 8: Plot Final Comparison Results</span>
+<span class="n">caps_final_comparison</span> <span class="o">=</span> <span class="n">caps_det</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">caps_final_comparison</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Stochastic API&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">caps_api</span>
+<span class="n">caps_final_comparison</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Stochastic Manual&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">caps_manual_stoch</span>
+
+<span class="n">objs_final_comparison</span> <span class="o">=</span> <span class="n">objs_det</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">objs_final_comparison</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Stochastic API&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj_api</span>
+<span class="n">objs_final_comparison</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Stochastic Manual&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj_manual_stoch</span>
+
+<span class="n">plot_capacity</span><span class="p">(</span>
+    <span class="n">caps_final_comparison</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Capacity Mix: Deterministic vs. Stochastic Approaches&quot;</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Scenario / Optimization Type&quot;</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plot_cost</span><span class="p">(</span>
+    <span class="n">objs_final_comparison</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Objective Value: Deterministic vs. Stochastic Approaches&quot;</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Scenario / Optimization Type&quot;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Total Cost (EUR)&quot;</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</pre></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03-pypsa-sectors-expansion.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Advanced models in <code class="docutils literal notranslate"><span class="pre">pypsa</span></code>: capacity expansion planning with sector coupling</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="annex-python.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Annex: Intro to the basics of <code class="docutils literal notranslate"><span class="pre">Python</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Marta Victoria, Fabian Neumann, Iegor Riepin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
