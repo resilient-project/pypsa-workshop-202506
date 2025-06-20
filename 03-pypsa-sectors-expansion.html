@@ -1089,12 +1089,12 @@ and/or output (i.e. <code class="docutils literal notranslate"><span class="pre"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:pypsa.consistency:The following stores have carriers which are not defined:
-Index([&#39;hydrogen storage&#39;], dtype=&#39;object&#39;, name=&#39;Store&#39;)
-</pre></div>
-</div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:pypsa.consistency:The following links have carriers which are not defined:
 Index([&#39;electrolysis&#39;, &#39;fuel cell&#39;], dtype=&#39;object&#39;, name=&#39;Link&#39;)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:pypsa.consistency:The following stores have carriers which are not defined:
+Index([&#39;hydrogen storage&#39;], dtype=&#39;object&#39;, name=&#39;Store&#39;)
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:pypsa.consistency:The following buses have carriers which are not defined:
@@ -1114,10 +1114,10 @@ Index([&#39;hydrogen demand&#39;], dtype=&#39;object&#39;, name=&#39;Load&#39;)
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing constraints.:   0%|          | 0/14 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing constraints.:  64%|██████▍   | 9/14 [00:00&lt;00:00, 86.16it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing constraints.:  64%|██████▍   | 9/14 [00:00&lt;00:00, 88.60it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing constraints.: 100%|██████████| 14/14 [00:00&lt;00:00, 66.11it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing constraints.: 100%|██████████| 14/14 [00:00&lt;00:00, 68.53it/s]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -1126,14 +1126,14 @@ Index([&#39;hydrogen demand&#39;], dtype=&#39;object&#39;, name=&#39;Load&#39;)
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing continuous variables.:   0%|          | 0/7 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing continuous variables.: 100%|██████████| 7/7 [00:00&lt;00:00, 168.43it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing continuous variables.: 100%|██████████| 7/7 [00:00&lt;00:00, 178.24it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:linopy.io: Writing time: 0.28s
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:linopy.io: Writing time: 0.27s
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running HiGHS 1.11.0 (git hash: 364c83a): Copyright (c) 2025 HiGHS under MIT licence terms
-LP   linopy-problem-6mjii98q has 37237 rows; 17527 cols; 71227 nonzeros
+LP   linopy-problem-m2idn47e has 37237 rows; 17527 cols; 71227 nonzeros
 Coefficient ranges:
   Matrix [1e-04, 4e+00]
   Cost   [4e-02, 2e+05]
@@ -1165,13 +1165,13 @@ Solver message: Optimal
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      14390     4.7521933007e+10 Pr: 0(0); Du: 0(1.85727e-11) 4s
 Solving the original LP from the solution after postsolve
-Model name          : linopy-problem-6mjii98q
+Model name          : linopy-problem-m2idn47e
 Model status        : Optimal
 Simplex   iterations: 14390
 Objective value     :  4.7521933007e+10
 P-D objective error :  5.6592007144e-14
-HiGHS run time      :          3.97
-Writing the solution to /tmp/linopy-solve-w648tt6p.sol
+HiGHS run time      :          3.94
+Writing the solution to /tmp/linopy-solve-qphrdsw4.sol
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;ok&#39;, &#39;optimal&#39;)
