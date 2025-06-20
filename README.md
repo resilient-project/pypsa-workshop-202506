@@ -10,7 +10,7 @@ The workshop is co-hosted by the **ENSYS research group at TU Berlin** — Fabia
 
 More about our work:
 
-- EXTREMES project: [https://orbit.dtu.dk/en/projects/disaster-resilience-for-extreme-climate-events-providing-interope](https://orbit.dtu.dk/en/projects/disaster-resilience-for-extreme-climate-events-providing-interope/)
+- EXTREMES project: [Designing a sector-coupled European energy system robust to 60 years of historical weather data](https://www.nature.com/articles/s41467-024-54853-3)
 
 - RESILIENT project: [https://resilient-project.github.io/](https://resilient-project.github.io/)
 
