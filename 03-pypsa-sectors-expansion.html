@@ -1089,8 +1089,8 @@ and/or output (i.e. <code class="docutils literal notranslate"><span class="pre"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:pypsa.consistency:The following links have carriers which are not defined:
-Index([&#39;electrolysis&#39;, &#39;fuel cell&#39;], dtype=&#39;object&#39;, name=&#39;Link&#39;)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:pypsa.consistency:The following loads have carriers which are not defined:
+Index([&#39;hydrogen demand&#39;], dtype=&#39;object&#39;, name=&#39;Load&#39;)
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:pypsa.consistency:The following stores have carriers which are not defined:
@@ -1101,8 +1101,8 @@ Index([&#39;hydrogen storage&#39;], dtype=&#39;object&#39;, name=&#39;Store&#39;
 Index([&#39;electricity&#39;, &#39;hydrogen&#39;], dtype=&#39;object&#39;, name=&#39;Bus&#39;)
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:pypsa.consistency:The following loads have carriers which are not defined:
-Index([&#39;hydrogen demand&#39;], dtype=&#39;object&#39;, name=&#39;Load&#39;)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:pypsa.consistency:The following links have carriers which are not defined:
+Index([&#39;electrolysis&#39;, &#39;fuel cell&#39;], dtype=&#39;object&#39;, name=&#39;Link&#39;)
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:linopy.model: Solve problem using Highs solver
@@ -1114,10 +1114,10 @@ Index([&#39;hydrogen demand&#39;], dtype=&#39;object&#39;, name=&#39;Load&#39;)
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing constraints.:   0%|          | 0/14 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing constraints.:  64%|██████▍   | 9/14 [00:00&lt;00:00, 88.60it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing constraints.:  64%|██████▍   | 9/14 [00:00&lt;00:00, 86.02it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing constraints.: 100%|██████████| 14/14 [00:00&lt;00:00, 68.53it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing constraints.: 100%|██████████| 14/14 [00:00&lt;00:00, 66.75it/s]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -1126,14 +1126,14 @@ Index([&#39;hydrogen demand&#39;], dtype=&#39;object&#39;, name=&#39;Load&#39;)
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing continuous variables.:   0%|          | 0/7 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing continuous variables.: 100%|██████████| 7/7 [00:00&lt;00:00, 178.24it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing continuous variables.: 100%|██████████| 7/7 [00:00&lt;00:00, 174.38it/s]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:linopy.io: Writing time: 0.27s
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running HiGHS 1.11.0 (git hash: 364c83a): Copyright (c) 2025 HiGHS under MIT licence terms
-LP   linopy-problem-m2idn47e has 37237 rows; 17527 cols; 71227 nonzeros
+LP   linopy-problem-y8150o_5 has 37237 rows; 17527 cols; 71227 nonzeros
 Coefficient ranges:
   Matrix [1e-04, 4e+00]
   Cost   [4e-02, 2e+05]
@@ -1165,13 +1165,13 @@ Solver message: Optimal
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      14390     4.7521933007e+10 Pr: 0(0); Du: 0(1.85727e-11) 4s
 Solving the original LP from the solution after postsolve
-Model name          : linopy-problem-m2idn47e
+Model name          : linopy-problem-y8150o_5
 Model status        : Optimal
 Simplex   iterations: 14390
 Objective value     :  4.7521933007e+10
 P-D objective error :  5.6592007144e-14
 HiGHS run time      :          3.94
-Writing the solution to /tmp/linopy-solve-qphrdsw4.sol
+Writing the solution to /tmp/linopy-solve-hk_hhev1.sol
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;ok&#39;, &#39;optimal&#39;)
@@ -1204,91 +1204,168 @@ Writing the solution to /tmp/linopy-solve-qphrdsw4.sol
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">35</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">n</span><span class="o">.</span><span class="n">statistics</span><span class="p">()</span>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.10/x64/lib/python3.12/site-packages/pypsa/statistics/expressions.py:356,</span> in <span class="ni">StatisticsAccessor.__call__</span><span class="nt">(self, comps, aggregate_groups, aggregate_across_components, groupby, at_port, carrier, bus_carrier, nice_names, drop_zero, round, aggregate_time)</span>
-<span class="g g-Whitespace">    </span><span class="mi">354</span> <span class="n">res</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="g g-Whitespace">    </span><span class="mi">355</span> <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">funcs</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">356</span>     <span class="n">df</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">357</span>         <span class="n">comps</span><span class="o">=</span><span class="n">comps</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">358</span>         <span class="n">aggregate_groups</span><span class="o">=</span><span class="n">aggregate_groups</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">359</span>         <span class="n">aggregate_across_components</span><span class="o">=</span><span class="n">aggregate_across_components</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">360</span>         <span class="n">groupby</span><span class="o">=</span><span class="n">groupby</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">361</span>         <span class="n">at_port</span><span class="o">=</span><span class="n">at_port</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">362</span>         <span class="n">carrier</span><span class="o">=</span><span class="n">carrier</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">363</span>         <span class="n">bus_carrier</span><span class="o">=</span><span class="n">bus_carrier</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">364</span>         <span class="n">nice_names</span><span class="o">=</span><span class="n">nice_names</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">365</span>         <span class="n">drop_zero</span><span class="o">=</span><span class="n">drop_zero</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">366</span>         <span class="nb">round</span><span class="o">=</span><span class="nb">round</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">367</span>     <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">368</span>     <span class="n">res</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">df</span>
-<span class="nn">    369 index = pd.Index(set.union(*[set(df.index) for df</span> in <span class="ni">res.values</span><span class="nt">()]))</span>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.10/x64/lib/python3.12/site-packages/pypsa/statistics/expressions.py:140,</span> in <span class="ni">StatisticHandler.__call__</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">139</span> <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>  <span class="c1"># noqa: D102</span>
-<span class="ne">--&gt; </span><span class="mi">140</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bound_method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.10/x64/lib/python3.12/site-packages/pypsa/statistics/expressions.py:1430,</span> in <span class="ni">StatisticsAccessor.transmission</span><span class="nt">(self, comps, aggregate_time, aggregate_groups, aggregate_across_components, groupby, at_port, carrier, bus_carrier, nice_names, drop_zero, round)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1427</span>     <span class="n">weights</span> <span class="o">=</span> <span class="n">get_weightings</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1428</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aggregate_timeseries</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">agg</span><span class="o">=</span><span class="n">aggregate_time</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1430</span> <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aggregate_components</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1431</span>     <span class="n">func</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1432</span>     <span class="n">comps</span><span class="o">=</span><span class="n">comps</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1433</span>     <span class="n">agg</span><span class="o">=</span><span class="n">aggregate_groups</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1434</span>     <span class="n">aggregate_across_components</span><span class="o">=</span><span class="n">aggregate_across_components</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1435</span>     <span class="n">groupby</span><span class="o">=</span><span class="n">groupby</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1436</span>     <span class="n">at_port</span><span class="o">=</span><span class="n">at_port</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1437</span>     <span class="n">carrier</span><span class="o">=</span><span class="n">carrier</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1438</span>     <span class="n">bus_carrier</span><span class="o">=</span><span class="n">bus_carrier</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1439</span>     <span class="n">nice_names</span><span class="o">=</span><span class="n">nice_names</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1440</span>     <span class="n">drop_zero</span><span class="o">=</span><span class="n">drop_zero</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1441</span>     <span class="nb">round</span><span class="o">=</span><span class="nb">round</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1442</span> <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1443</span> <span class="n">df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Transmission&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1444</span> <span class="n">df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;unit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;carrier dependent&quot;</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.10/x64/lib/python3.12/site-packages/pypsa/statistics/abstract.py:283,</span> in <span class="ni">AbstractStatisticsAccessor._aggregate_components</span><span class="nt">(self, func, agg, comps, groupby, aggregate_across_components, at_port, bus_carrier, carrier, nice_names, drop_zero, round)</span>
-<span class="g g-Whitespace">    </span><span class="mi">281</span>     <span class="n">d</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
-<span class="g g-Whitespace">    </span><span class="mi">282</span> <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aggregate_components_concat_data</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">is_one_component</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">283</span> <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_option_kwargs</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">284</span>     <span class="n">df</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">285</span>     <span class="n">drop_zero</span><span class="o">=</span><span class="n">drop_zero</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">286</span>     <span class="nb">round</span><span class="o">=</span><span class="nb">round</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">287</span>     <span class="n">nice_names</span><span class="o">=</span><span class="n">nice_names</span><span class="p">,</span>  <span class="c1"># TODO: nice_names does not have effect here</span>
-<span class="g g-Whitespace">    </span><span class="mi">288</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">290</span> <span class="k">if</span> <span class="n">aggregate_across_components</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">291</span>     <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aggregate_across_components</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">agg</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.10/x64/lib/python3.12/site-packages/pypsa/statistics/expressions.py:247,</span> in <span class="ni">StatisticsAccessor._apply_option_kwargs</span><span class="nt">(self, df, nice_names, drop_zero, round)</span>
-<span class="g g-Whitespace">    </span><span class="mi">243</span> <span class="n">drop_zero_</span> <span class="o">=</span> <span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">244</span>     <span class="n">options</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">statistics</span><span class="o">.</span><span class="n">drop_zero</span> <span class="k">if</span> <span class="n">drop_zero</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">drop_zero</span>
-<span class="g g-Whitespace">    </span><span class="mi">245</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">246</span> <span class="k">if</span> <span class="n">round_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">247</span>     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">round_</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">248</span> <span class="k">if</span> <span class="n">drop_zero_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">249</span>     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.10/x64/lib/python3.12/site-packages/pandas/core/series.py:2818,</span> in <span class="ni">Series.round</span><span class="nt">(self, decimals, *args, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2816</span> <span class="n">nv</span><span class="o">.</span><span class="n">validate_round</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2817</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;object&quot;</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">2818</span>     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Expected numeric dtype, got object instead.&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2819</span> <span class="n">new_mgr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mgr</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">decimals</span><span class="o">=</span><span class="n">decimals</span><span class="p">,</span> <span class="n">using_cow</span><span class="o">=</span><span class="n">using_copy_on_write</span><span class="p">())</span>
-<span class="g g-Whitespace">   </span><span class="mi">2820</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constructor_from_mgr</span><span class="p">(</span><span class="n">new_mgr</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">new_mgr</span><span class="o">.</span><span class="n">axes</span><span class="p">)</span><span class="o">.</span><span class="n">__finalize__</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">2821</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;round&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">2822</span> <span class="p">)</span>
-
-<span class="ne">TypeError</span>: Expected numeric dtype, got object instead.
-</pre></div>
-</div>
-</div>
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>Optimal Capacity</th>
+      <th>Installed Capacity</th>
+      <th>Supply</th>
+      <th>Withdrawal</th>
+      <th>Energy Balance</th>
+      <th>Transmission</th>
+      <th>Capacity Factor</th>
+      <th>Curtailment</th>
+      <th>Capital Expenditure</th>
+      <th>Operational Expenditure</th>
+      <th>Revenue</th>
+      <th>Market Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="3" valign="top">Generator</th>
+      <th>OCGT</th>
+      <td>69495.97520</td>
+      <td>0.0</td>
+      <td>2.642126e+08</td>
+      <td>0.000000e+00</td>
+      <td>2.642126e+08</td>
+      <td>0.0</td>
+      <td>0.434000</td>
+      <td>3.445721e+08</td>
+      <td>3.316256e+09</td>
+      <td>1.709032e+10</td>
+      <td>2.040657e+10</td>
+      <td>77.235416</td>
+    </tr>
+    <tr>
+      <th>offwind</th>
+      <td>97743.93570</td>
+      <td>0.0</td>
+      <td>2.985578e+08</td>
+      <td>0.000000e+00</td>
+      <td>2.985578e+08</td>
+      <td>0.0</td>
+      <td>0.348686</td>
+      <td>1.207735e+07</td>
+      <td>1.706181e+10</td>
+      <td>6.329425e+06</td>
+      <td>1.706814e+10</td>
+      <td>57.168634</td>
+    </tr>
+    <tr>
+      <th>solar</th>
+      <td>147591.95957</td>
+      <td>0.0</td>
+      <td>1.601839e+08</td>
+      <td>0.000000e+00</td>
+      <td>1.601839e+08</td>
+      <td>0.0</td>
+      <td>0.123894</td>
+      <td>3.767638e+05</td>
+      <td>7.578379e+09</td>
+      <td>1.697949e+06</td>
+      <td>7.580077e+09</td>
+      <td>47.321103</td>
+    </tr>
+    <tr>
+      <th>Link</th>
+      <th>electrolysis</th>
+      <td>46714.11681</td>
+      <td>0.0</td>
+      <td>0.000000e+00</td>
+      <td>2.440286e+08</td>
+      <td>-2.440286e+08</td>
+      <td>0.0</td>
+      <td>0.596332</td>
+      <td>0.000000e+00</td>
+      <td>2.335706e+09</td>
+      <td>0.000000e+00</td>
+      <td>-1.362491e+10</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">Load</th>
+      <th>-</th>
+      <td>0.00000</td>
+      <td>0.0</td>
+      <td>0.000000e+00</td>
+      <td>4.789257e+08</td>
+      <td>-4.789257e+08</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>-3.142989e+10</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>hydrogen</th>
+      <td>0.00000</td>
+      <td>0.0</td>
+      <td>0.000000e+00</td>
+      <td>1.708200e+08</td>
+      <td>-1.708200e+08</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>-1.609205e+10</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Store</th>
+      <th>hydrogen storage</th>
+      <td>938822.02685</td>
+      <td>0.0</td>
+      <td>4.916653e+07</td>
+      <td>4.916653e+07</td>
+      <td>0.000000e+00</td>
+      <td>0.0</td>
+      <td>0.158416</td>
+      <td>0.000000e+00</td>
+      <td>1.314351e+08</td>
+      <td>0.000000e+00</td>
+      <td>1.314351e+08</td>
+      <td>2.673263</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>We can use <code class="docutils literal notranslate"><span class="pre">n.statisitcs()</span></code> to get a quick overview of optimised capacities across all components:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">statistics</span><span class="o">.</span><span class="n">expanded_capacity</span><span class="p">()</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="mf">1e3</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># GW</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>component  carrier         
+Generator  OCGT                 69.5
+           offwind              97.7
+           solar               147.6
+Link       electrolysis         46.7
+Store      hydrogen storage    938.8
+dtype: float64
 </pre></div>
 </div>
 </div>
@@ -1300,6 +1377,360 @@ Writing the solution to /tmp/linopy-solve-qphrdsw4.sol
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>snapshot</th>
+      <th>2015-01-01 00:00:00</th>
+      <th>2015-01-01 04:00:00</th>
+      <th>2015-01-01 08:00:00</th>
+      <th>2015-01-01 12:00:00</th>
+      <th>2015-01-01 16:00:00</th>
+      <th>2015-01-01 20:00:00</th>
+      <th>2015-01-02 00:00:00</th>
+      <th>2015-01-02 04:00:00</th>
+      <th>2015-01-02 08:00:00</th>
+      <th>2015-01-02 12:00:00</th>
+      <th>...</th>
+      <th>2015-12-30 08:00:00</th>
+      <th>2015-12-30 12:00:00</th>
+      <th>2015-12-30 16:00:00</th>
+      <th>2015-12-30 20:00:00</th>
+      <th>2015-12-31 00:00:00</th>
+      <th>2015-12-31 04:00:00</th>
+      <th>2015-12-31 08:00:00</th>
+      <th>2015-12-31 12:00:00</th>
+      <th>2015-12-31 16:00:00</th>
+      <th>2015-12-31 20:00:00</th>
+    </tr>
+    <tr>
+      <th>component</th>
+      <th>carrier</th>
+      <th>bus_carrier</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="4" valign="top">Generator</th>
+      <th>OCGT</th>
+      <th>AC</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>6588.61467</td>
+    </tr>
+    <tr>
+      <th>offwind</th>
+      <th>AC</th>
+      <td>68713.98680</td>
+      <td>71079.39004</td>
+      <td>76513.95286</td>
+      <td>63267.54439</td>
+      <td>88184.57879</td>
+      <td>95075.52625</td>
+      <td>87291.11681</td>
+      <td>89096.11681</td>
+      <td>96219.13030</td>
+      <td>88983.96447</td>
+      <td>...</td>
+      <td>73268.85420</td>
+      <td>71457.24329</td>
+      <td>83991.36394</td>
+      <td>86004.88902</td>
+      <td>83189.86367</td>
+      <td>80462.80787</td>
+      <td>74256.06795</td>
+      <td>75183.49011</td>
+      <td>57698.24524</td>
+      <td>39322.38533</td>
+    </tr>
+    <tr>
+      <th>onwind</th>
+      <th>AC</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>solar</th>
+      <th>AC</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>6523.56461</td>
+      <td>30610.57241</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2907.56160</td>
+      <td>16294.15234</td>
+      <td>...</td>
+      <td>6981.09969</td>
+      <td>29488.87352</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>6139.82552</td>
+      <td>22271.62670</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th rowspan="4" valign="top">Link</th>
+      <th>electrolysis</th>
+      <th>AC</th>
+      <td>-27562.98680</td>
+      <td>-32138.39004</td>
+      <td>-40074.51748</td>
+      <td>-46714.11681</td>
+      <td>-34774.57879</td>
+      <td>-46345.52625</td>
+      <td>-46714.11681</td>
+      <td>-46714.11681</td>
+      <td>-42621.69190</td>
+      <td>-46714.11681</td>
+      <td>...</td>
+      <td>-26843.95389</td>
+      <td>-46714.11681</td>
+      <td>-25168.36394</td>
+      <td>-33945.88902</td>
+      <td>-42405.86367</td>
+      <td>-39956.80787</td>
+      <td>-30172.89347</td>
+      <td>-46714.11681</td>
+      <td>-3053.24524</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>fuel cell</th>
+      <th>hydrogen</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>electrolysis</th>
+      <th>hydrogen</th>
+      <td>19294.09076</td>
+      <td>22496.87303</td>
+      <td>28052.16223</td>
+      <td>32699.88177</td>
+      <td>24342.20515</td>
+      <td>32441.86838</td>
+      <td>32699.88177</td>
+      <td>32699.88177</td>
+      <td>29835.18433</td>
+      <td>32699.88177</td>
+      <td>...</td>
+      <td>18790.76772</td>
+      <td>32699.88177</td>
+      <td>17617.85476</td>
+      <td>23762.12231</td>
+      <td>29684.10457</td>
+      <td>27969.76551</td>
+      <td>21121.02543</td>
+      <td>32699.88177</td>
+      <td>2137.27167</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>fuel cell</th>
+      <th>AC</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">Load</th>
+      <th>-</th>
+      <th>AC</th>
+      <td>-41151.00000</td>
+      <td>-38941.00000</td>
+      <td>-42963.00000</td>
+      <td>-47164.00000</td>
+      <td>-53410.00000</td>
+      <td>-48730.00000</td>
+      <td>-40577.00000</td>
+      <td>-42382.00000</td>
+      <td>-56505.00000</td>
+      <td>-58564.00000</td>
+      <td>...</td>
+      <td>-53406.00000</td>
+      <td>-54232.00000</td>
+      <td>-58823.00000</td>
+      <td>-52059.00000</td>
+      <td>-40784.00000</td>
+      <td>-40506.00000</td>
+      <td>-50223.00000</td>
+      <td>-50741.00000</td>
+      <td>-54645.00000</td>
+      <td>-45911.00000</td>
+    </tr>
+    <tr>
+      <th>hydrogen</th>
+      <th>hydrogen</th>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>...</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+      <td>-19500.00000</td>
+    </tr>
+    <tr>
+      <th>Store</th>
+      <th>hydrogen storage</th>
+      <th>hydrogen</th>
+      <td>205.90924</td>
+      <td>-2996.87303</td>
+      <td>-8552.16223</td>
+      <td>-13199.88177</td>
+      <td>-4842.20515</td>
+      <td>-12941.86838</td>
+      <td>-13199.88177</td>
+      <td>-13199.88177</td>
+      <td>-10335.18433</td>
+      <td>-13199.88177</td>
+      <td>...</td>
+      <td>709.23228</td>
+      <td>-13199.88177</td>
+      <td>1882.14524</td>
+      <td>-4262.12231</td>
+      <td>-10184.10457</td>
+      <td>-8469.76551</td>
+      <td>-1621.02543</td>
+      <td>-13199.88177</td>
+      <td>17362.72833</td>
+      <td>19500.00000</td>
+    </tr>
+  </tbody>
+</table>
+<p>11 rows × 2190 columns</p>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1309,6 +1740,8 @@ Writing the solution to /tmp/linopy-solve-qphrdsw4.sol
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1317,6 +1750,8 @@ Writing the solution to /tmp/linopy-solve-qphrdsw4.sol
 <span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;carrier&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
 </div>
 </div>
 <p>Possibly, we are also interested in the total emissions:</p>
@@ -1334,6 +1769,11 @@ Writing the solution to /tmp/linopy-solve-qphrdsw4.sol
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">snapshot_weightings</span><span class="o">.</span><span class="n">generators</span> <span class="o">@</span> <span class="n">emissions</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="mf">1e6</span><span class="p">)</span>  <span class="c1"># Mt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(127.59537376038037)
 </pre></div>
 </div>
 </div>
@@ -1355,14 +1795,115 @@ Writing the solution to /tmp/linopy-solve-qphrdsw4.sol
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;CO2Limit&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
 </div>
 <p>When we run the model now…</p>
 <div class="cell tag_hide-output docutils container">
-<div class="cell_input docutils container">
+<div class="cell_input above-output-prompt docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">solver_name</span><span class="o">=</span><span class="s2">&quot;highs&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:pypsa.consistency:The following loads have carriers which are not defined:
+Index([&#39;hydrogen demand&#39;], dtype=&#39;object&#39;, name=&#39;Load&#39;)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:pypsa.consistency:The following stores have carriers which are not defined:
+Index([&#39;hydrogen storage&#39;], dtype=&#39;object&#39;, name=&#39;Store&#39;)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:pypsa.consistency:The following buses have carriers which are not defined:
+Index([&#39;electricity&#39;, &#39;hydrogen&#39;], dtype=&#39;object&#39;, name=&#39;Bus&#39;)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:pypsa.consistency:The following links have carriers which are not defined:
+Index([&#39;electrolysis&#39;, &#39;fuel cell&#39;], dtype=&#39;object&#39;, name=&#39;Link&#39;)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:linopy.model: Solve problem using Highs solver
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:linopy.io:Writing objective.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing constraints.:   0%|          | 0/15 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing constraints.:  67%|██████▋   | 10/15 [00:00&lt;00:00, 81.83it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing constraints.: 100%|██████████| 15/15 [00:00&lt;00:00, 71.30it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing continuous variables.:   0%|          | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing continuous variables.: 100%|██████████| 7/7 [00:00&lt;00:00, 173.92it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:linopy.io: Writing time: 0.27s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running HiGHS 1.11.0 (git hash: 364c83a): Copyright (c) 2025 HiGHS under MIT licence terms
+LP   linopy-problem-5j4d_vmn has 37238 rows; 17527 cols; 73417 nonzeros
+Coefficient ranges:
+  Matrix [1e-04, 4e+00]
+  Cost   [4e-02, 2e+05]
+  Bound  [0e+00, 0e+00]
+  RHS    [2e+04, 8e+04]
+Presolving model
+18660 rows, 14286 cols, 47220 nonzeros  0s
+Dependent equations search running on 4380 equations with time limit of 1000.00s
+Dependent equations search removed 0 rows and 0 nonzeros in 0.00s (limit = 1000.00s)
+16470 rows, 12096 cols, 42840 nonzeros  0s
+Presolve : Reductions: rows 16470(-20768); columns 12096(-5431); elements 42840(-30577)
+Solving the presolved LP
+Using EKK dual simplex solver - serial
+  Iteration        Objective     Infeasibilities num(sum)
+          0     0.0000000000e+00 Pr: 4380(2.44921e+08) 0s
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:linopy.constants: Optimization successful: 
+Status: ok
+Termination condition: optimal
+Solution: 17527 primals, 37238 duals
+Objective: 7.53e+10
+Solver model: available
+Solver message: Optimal
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:pypsa.optimization.optimize:The shadow-prices of the constraints Generator-ext-p-lower, Generator-ext-p-upper, Link-ext-p-lower, Link-ext-p-upper, Store-ext-e-lower, Store-ext-e-upper, Store-energy_balance were not assigned to the network.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      11327     7.5338336224e+10 Pr: 0(0); Du: 0(5.41256e-12) 3s
+Solving the original LP from the solution after postsolve
+Model name          : linopy-problem-5j4d_vmn
+Model status        : Optimal
+Simplex   iterations: 11327
+Objective value     :  7.5338336224e+10
+P-D objective error :  6.8862527914e-15
+HiGHS run time      :          3.33
+Writing the solution to /tmp/linopy-solve-wvpwc4y2.sol
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;ok&#39;, &#39;optimal&#39;)
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 <p>The total system cost (billion Euros per year) is now higher than before:</p>
 <div class="cell docutils container">
@@ -1371,11 +1912,28 @@ Writing the solution to /tmp/linopy-solve-qphrdsw4.sol
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>75.33833622431519
+</pre></div>
+</div>
+</div>
 </div>
 <p>The optimal capacity mix now does not include any gas power plants and includes onshore wind and fuel cell technologies:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">statistics</span><span class="o">.</span><span class="n">expanded_capacity</span><span class="p">()</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="mf">1e3</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># GW</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>component  carrier         
+Generator  offwind               101.8
+           onwind                111.9
+           solar                 332.5
+Link       electrolysis          145.0
+           fuel cell             135.2
+Store      hydrogen storage    38417.0
+dtype: float64
 </pre></div>
 </div>
 </div>
@@ -1389,6 +1947,8 @@ Writing the solution to /tmp/linopy-solve-qphrdsw4.sol
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1398,12 +1958,16 @@ Writing the solution to /tmp/linopy-solve-qphrdsw4.sol
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">stores_t</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
 </div>
 </div>
 <p>Total emissions are now zero:</p>
@@ -1421,6 +1985,11 @@ Writing the solution to /tmp/linopy-solve-qphrdsw4.sol
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">.</span><span class="n">snapshot_weightings</span><span class="o">.</span><span class="n">generators</span> <span class="o">@</span> <span class="n">emissions</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="mf">1e6</span><span class="p">)</span>  <span class="c1"># Mt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.0)
 </pre></div>
 </div>
 </div>
