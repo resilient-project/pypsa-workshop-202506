@@ -31,16 +31,12 @@ their multiple versions can be difficult! Fortunately, the problem is solved by
 using a Python _distribution_ and/or _package manager_.
 
 For instance, you can install on your computer the popular [Anaconda Python
-Distribution](https://www.anaconda.com/download/).
+Distribution](https://www.anaconda.com/download/) or the ligth version `miniconda` described below.
 
 For **Linux and MacOS users**, you can access the command line by opening the
 _terminal_ program.
 
-For **Windows users**, you should first install Anaconda (described above) or
-`miniconda` (described below), which gives you access to the "Anaconda Prompt"
-desktop application. Instructions for this are given on the [Anaconda
-Website](https://docs.anaconda.com/anaconda/user-guide/getting-started/#write-a-python-program-using-anaconda-prompt-or-terminal).
-From the Anaconda Prompt, you should be able to run `conda`.
+For **Windows users**, note that many company laptops have restrictions for installing new software. In previous workshops, we have found that installations on Windows are more prone to errors so we strongly recommend using Linux. [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install) or an [Ubuntu Virtual Machine](https://ubuntu.com/tutorials/how-to-run-ubuntu-desktop-on-a-virtual-machine-using-virtualbox#1-overview) are two nice options for using Linux on a Windows machine.
 
 ## Managing environments with `conda`
 
@@ -50,7 +46,7 @@ and configurations. Here is [a great short article](https://medium.com/data-scie
 
 ### Tip: use lightweight `miniconda`
 
-Do yourself a favor --- use a lightweight installation called
+Instead of `Anaconda`, you use a lightweight installation called
 [`miniconda`](https://docs.conda.io/en/latest/miniconda.html). It is very likely that you don't want the full Anaconda Python Distribution.
 
 
