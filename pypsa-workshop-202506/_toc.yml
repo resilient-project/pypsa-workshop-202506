@@ -6,6 +6,8 @@ root: intro
 chapters:
 - file: slides
   title: Slide deck PyPSA(-Eur)
+- file: videos
+  title: Videos
 - file: 01-pypsa-intro
 - file: 02-pypsa-more-features
 - file: 03-pypsa-sectors-expansion
